@@ -1,0 +1,80 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% if settings.display_three_block_banner %}
+<section class="banner-home-top container">
+  <ul class="row">
+    <li class="col-xs-12 col-sm-4 wow fadeInUp" data-wow-delay="{{ settings.time_lazy_load }}ms">
+      <a href="{{ settings.three_block_banner_link_1 }}" title="{{ settings.three_block_banner_text_1 }}">
+        {% comment %}ly_asset_replace_for_[ 'top-banner-home-1.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'top-banner-home-1.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+        {% if settings.display_banner_text_1 %}
+          <h4>
+            <span style="
+              {% if settings.three_block_banner_size_1 != blank %}
+                  font-size: {{ settings.three_block_banner_size_1 }}px;
+              {% elsif settings.three_block_banner_size != blank %}
+                  font-size: {{ settings.three_block_banner_size }}px;
+              {% endif %}
+              {% if settings.three_block_banner_color_1 != blank %} 
+                  color: {{ settings.three_block_banner_color_1 }};
+              {% elsif settings.three_block_banner_color != blank %}
+                  color: {{ settings.three_block_banner_color }};
+              {% endif %}"
+            >	
+                {% if settings.three_block_banner_text_1 != blank %}
+                {{ settings.three_block_banner_text_1 }}
+                {% endif %}
+            </span>
+          </h4>
+        {% endif %}
+      </a>
+	</li>
+    <li class="col-xs-12 col-sm-4 wow fadeInUp" data-wow-delay="{{ settings.time_lazy_load | times: 2 }}ms">
+      <a href="{{ settings.three_block_banner_link_2 }}" title="{{ settings.three_block_banner_text_2 }}">{% comment %}ly_asset_replace_for_[ 'top-banner-home-2.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'top-banner-home-2.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+        {% if settings.display_banner_text_2 %}
+        <h4>
+          <span style="
+            {% if settings.three_block_banner_size_2 != blank %}
+                font-size: {{ settings.three_block_banner_size_2 }}px;
+            {% elsif settings.three_block_banner_size != blank %}
+                font-size: {{ settings.three_block_banner_size }}px;
+            {% endif %}
+            {% if settings.three_block_banner_color_2 != blank %} 
+                color: {{ settings.three_block_banner_color_2 }};
+            {% elsif settings.three_block_banner_color != blank %}
+                color: {{ settings.three_block_banner_color }};
+            {% endif %}"
+          >
+            {% if settings.three_block_banner_text_2 != blank %}
+            {{ settings.three_block_banner_text_2 }}
+            {% endif %}
+          </span>
+        </h4>
+        {% endif %}
+      </a>
+	</li>
+    <li class="col-xs-12 col-sm-4 wow fadeInUp" data-wow-delay="{{ settings.time_lazy_load | times: 3 }}ms">
+      <a href="{{ settings.three_block_banner_link_3 }}" title="{{ settings.three_block_banner_text_3 }}">
+        {% comment %}ly_asset_replace_for_[ 'top-banner-home-3.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'top-banner-home-3.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+        {% if settings.display_banner_text_3 %}
+        <h4>
+          <span style="
+              {% if settings.three_block_banner_size_3 != blank %}
+                  font-size: {{ settings.three_block_banner_size_3 }}px;
+              {% elsif settings.three_block_banner_size != blank %}
+                  font-size: {{ settings.three_block_banner_size }}px;
+              {% endif %}
+              {% if settings.three_block_banner_color_3 != blank %} 
+                  color: {{ settings.three_block_banner_color_3 }};
+              {% elsif settings.three_block_banner_color != blank %}
+                  color: {{ settings.three_block_banner_color }};
+              {% endif %}"
+            >
+            {% if settings.three_block_banner_text_3 != blank %}
+            {{ settings.three_block_banner_text_3 }}
+            {% endif %}
+          </span>
+          </h4>
+        {% endif %}
+      </a>
+	</li>
+  </ul>
+</section>
+{% endif %}

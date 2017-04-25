@@ -1,0 +1,7 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% if settings.show_tab == 'vertical' %}            
+<div class="panel-group" id="accordion">
+  {% if settings.display_product_detail_description %}
+    {% comment %}ly_code_replace_for_[ product.description ]_begin{% endcomment %}{% include 'ly-description' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+  {% endif %}
+</div>            
+{% endif %}

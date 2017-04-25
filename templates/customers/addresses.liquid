@@ -1,0 +1,237 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% comment %}
+
+  This template will be automatically generated for you if the file doesn't exist,
+  but where's the fun in having no control? Define your layout below.
+
+  The 'layout settings.customer_layout' line is inserted at the top of every customer account template.
+  Your theme's settings determine to use the 'default' or 'theme' customer templates.
+  More info:
+    - http://www.tetchi.ca/shopify-theme-from-scratch-part-11/
+
+  Template note:
+    - All IDs on this template are required to make the form(s) submit properly
+    - There are two instances of inline JS below. Best practices advise separating this
+      into an external JS file
+    - There are separate 'add new' and 'edit' address forms
+
+{% endcomment %}
+
+{% layout settings.customer_layout %}
+
+<div class="grid">
+  <div class="grid-item large--two-thirds push--large--one-sixth">
+    <header class="page-header">
+      <h1 class="large--left"><ly-as-4215007>My Account</ly-as-4215007></h2>
+    </header>
+    <p class="large--right">
+      <a href="#" class="btn" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;"><ly-as-4215008>Add New Address</ly-as-4215008></a>
+    </p>
+    <p class="large--text-right"><a href="/account"><ly-as-4215009>Return to Account Details</ly-as-4215009></a></p>
+
+    {% comment %}
+      Add address form, hidden by default
+    {% endcomment %}
+    <div id="add_address" style="display: none;">
+      {% form 'customer_address', customer.new_address %}
+      <header class="page-header">
+        <h2><ly-as-4215010>Add a new address</ly-as-4215010></h2>
+      </header>
+      
+      <div class="grid">
+        <div class="grid-item one-half small--one-whole">
+          <label for="address_first_name_new"><ly-as-4215011>First Name</ly-as-4215011></label>
+          <input type="text" id="address_first_name_new" class="address_form" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+        </div>
+        
+        <div class="grid-item one-half small--one-whole">
+          <label for="address_last_name_new"><ly-as-4215012>Last Name</ly-as-4215012></label>
+          <input type="text" id="address_last_name_new" class="address_form" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
+        </div>
+      </div>
+      
+      <label for="address_company_new"><ly-as-4215013>Company</ly-as-4215013></label>
+      <input type="text" id="address_company_new" class="address_form" name="address[company]" value="{{form.company}}" autocapitalize="words">
+      
+      <label for="address_address1_new"><ly-as-4215014>Address 1</ly-as-4215014></label>
+      <input type="text" id="address_address1_new" class="address_form" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
+
+      <label for="address_address2_new"><ly-as-4215015>Address 2</ly-as-4215015></label>
+      <input type="text" id="address_address2_new" class="address_form" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
+      
+      <label for="address_city_new"><ly-as-4215016>City</ly-as-4215016></label>
+      <input type="text" id="address_city_new" class="address_form" name="address[city]" value="{{form.city}}" autocapitalize="words">
+
+      <label for="address_country_new"><ly-as-4215017>Country</ly-as-4215017></label>
+      <select id="address_country_new" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+
+      <div id="address_province_container_new" style="display:none">
+        <label for="address_province_new"><ly-as-4215018>Province</ly-as-4215018></label>
+        <select id="address_province_new" class="address_form" name="address[province]" data-default="{{form.province}}"></select>
+      </div>
+      
+      <div class="grid">
+        <div class="grid-item one-half small--one-whole">
+          <label for="address_zip_new"><ly-as-4215019>Postal/Zip Code</ly-as-4215019></label>
+          <input type="text" id="address_zip_new" class="address_form" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
+        </div>
+        
+        <div class="grid-item one-half small--one-whole">
+          <label for="address_phone_new"><ly-as-4215020>Phone</ly-as-4215020></label>
+          <input type="tel" id="address_phone_new" class="address_form" name="address[phone]" value="{{form.phone}}" placeholder="555-555-1234">
+        </div>
+      </div>
+      
+      <p>
+        {{ form.set_as_default_checkbox }}
+        <label for="address_default_address_new" class="inline"><ly-as-4215021>Set as Default Address?</ly-as-4215021></label>
+      </p>
+      
+      <input type="submit" class="btn" value="<ly-as-4215029>Add Address</ly-as-4215029>">
+      <ly-as-4215022>or</ly-as-4215022> <a href="#" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;"><ly-as-4215023>Cancel</ly-as-4215023></a>
+
+      {% endform %}
+      <hr>
+    </div>
+
+    <header class="page-header">
+      <h2><ly-as-4215024>Customer Address Book</ly-as-4215024></h2>
+    </header>
+
+    {% comment %}
+      List all customer addresses with a unique edit form.
+      Also add pagination in case they have a large number of address (unlikely)
+    {% endcomment %}
+    {% paginate customer.addresses by 5 %}
+      {% for address in customer.addresses %}
+
+        <h3>
+          {{ address.first_name | capitalize }} {{address.last_name | capitalize }}
+          {% if address == customer.default_address %}<em><ly-as-4215025>(default)</ly-as-4215025></em>{% endif %}
+        </h3>
+
+        <p>
+          {{ address.company }}<br>
+          {{ address.street }}<br>
+          {{ address.city | capitalize }}<br>
+          {% if address.province_code %}
+            {{ address.province_code | upcase }}<br>
+          {% endif %}
+          {{ address.zip | upcase }}<br>
+          {{ address.country }}<br>
+          {{ address.phone }}
+        </p>
+        <p class="button">
+          {{ "<ly-as-4215026>Edit</ly-as-4215026>" | edit_customer_address_link: address.id }}
+          {{ "<ly-as-4215027>Delete</ly-as-4215027>" | delete_customer_address_link: address.id }}
+        </p>
+
+        <div id="edit_address_{{address.id}}" style="display:none;">
+          {% form 'customer_address', address %}
+          <header class="page-header">
+            <h4><ly-as-4215028>Edit address</ly-as-4215028></h4>
+          </header>
+          
+          <div class="grid">
+            <div class="grid-item one-half small--one-whole">
+              <label for="address_first_name_{{form.id}}"><ly-as-4215011>First Name</ly-as-4215011></label>
+              <input type="text" id="address_first_name_{{form.id}}" class="address_form" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+            </div>
+            
+            <div class="grid-item one-half small--one-whole">
+              <label for="address_last_name_{{form.id}}"><ly-as-4215012>Last Name</ly-as-4215012></label>
+              <input type="text" id="address_last_name_{{form.id}}" class="address_form" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
+            </div>
+          </div>
+          
+          <label for="address_company_{{form.id}}"><ly-as-4215013>Company</ly-as-4215013></label>
+          <input type="text" id="address_company_{{form.id}}" class="address_form" name="address[company]" value="{{form.company}}" autocapitalize="words">
+          
+          <label for="address_address1_{{form.id}}"><ly-as-4215014>Address 1</ly-as-4215014></label>
+          <input type="text" id="address_address1_{{form.id}}" class="address_form" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
+          
+          <label for="address_address2_{{form.id}}"><ly-as-4215015>Address 2</ly-as-4215015></label>
+          <input type="text" id="address_address2_{{form.id}}" class="address_form" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
+          
+          <label for="address_city_{{form.id}}"><ly-as-4215016>City</ly-as-4215016></label>
+          <input type="text" id="address_city_{{form.id}}" class="address_form" name="address[city]" value="{{form.city}}" autocapitalize="words">
+
+          <label for="address_country_{{form.id}}"><ly-as-4215017>Country</ly-as-4215017></label>
+          <select id="address_country_{{form.id}}" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+
+          <div id="address_province_container_{{form.id}}" style="display:none">
+            <label for="address_province_{{form.id}}"><ly-as-4215018>Province</ly-as-4215018></label>
+            <select id="address_province_{{form.id}}" class="address_form" name="address[province]" data-default="{{form.province}}"></select>
+          </div>
+
+          <div class="grid">
+            <div class="grid-item one-half small--one-whole">
+              <label for="address_zip_{{form.id}}"><ly-as-4215019>Postal/Zip Code</ly-as-4215019></label>
+              <input type="text" id="address_zip_{{form.id}}" class="address_form" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
+            </div>
+
+            <div class="grid-item one-half small--one-whole">
+              <label for="address_phone_{{form.id}}"><ly-as-4215020>Phone</ly-as-4215020></label>
+              <input type="tel" id="address_phone_{{form.id}}" class="address_form" name="address[phone]" value="{{form.phone}}" placeholder="555-555-1234">
+            </div>
+          </div>
+
+          <p>
+            {{ form.set_as_default_checkbox }}
+            <label for="address_default_address_new" class="inline"><ly-as-4215021>Set as Default Address?</ly-as-4215021></label>
+          </p>
+
+          <input type="submit" class="btn" value="<ly-as-4215030>Update Address</ly-as-4215030>">
+          <ly-as-4215022>or</ly-as-4215022> <a href="#" onclick="Shopify.CustomerAddress.toggleForm({{form.id}}); return false;"><ly-as-4215023>Cancel</ly-as-4215023></a>
+
+          {% endform %}
+        </div>
+
+        <hr>
+      {% endfor %}
+
+      {% if paginate.pages > 1 %}
+      <div class="text-center">
+        {% include 'pagination' %}
+      </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</div>
+
+
+<script>
+  // Initialize observers on address selectors
+  new Shopify.CountryProvinceSelector('address_country_new', 'address_province_new', {
+    hideElement: 'address_province_container_new'
+  });
+
+  // Setup province selector on each customer address
+  {% for address in customer.addresses %}
+    new Shopify.CountryProvinceSelector('address_country_{{address.id}}', 'address_province_{{address.id}}', {
+      hideElement: 'address_province_container_{{address.id}}'}
+    );
+  {% endfor %}
+
+  // Contents of customer_area.js (global asset)
+  Shopify.CustomerAddress = {
+    toggleForm: function(id) {
+      var editEl = document.getElementById('edit_address_'+id);
+      var viewEl = document.getElementById('view_address_'+id);
+      editEl.style.display = editEl.style.display == 'none' ? '' : 'none';
+      viewEl.style.display = viewEl.style.display == 'none' ? '' : 'none';
+      return false;
+    },
+
+    toggleNewForm: function() {
+      var el = document.getElementById('add_address');
+      el.style.display = el.style.display == 'none' ? '' : 'none';
+      return false;
+    },
+
+    destroy: function(id, confirm_msg) {
+      if (confirm(confirm_msg || "Are you sure you wish to delete this address?")) {
+        Shopify.postLink('/account/addresses/'+id, {'parameters': {'_method': 'delete'}});
+      }
+    }
+  }
+</script>

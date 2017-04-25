@@ -1,0 +1,32 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% comment %}
+  We want control over our error text, so we'll loop through them.
+
+  Alternatively, you can use the default layout to generate a
+  <ul> wrapped with <div class="errors">
+    - {{ form.errors | default_errors }}
+{% endcomment %}
+{% if form.errors %}
+  <div class="note form-error">
+    <p><ly-as-4214689>Sorry, looks like something went wrong. Please correct the following and submit again:</ly-as-4214689></p>
+
+    <ul class="disc">
+      {% for field in form.errors %}
+
+        {% comment %}
+          Check if it's a generic 'form' error and don't show the {{ field }}
+        {% endcomment %}
+
+        {% if field == 'form' %}
+          <li>
+            {{ form.errors.messages[field] }}
+          </li>
+        {% else %}
+          <li>
+            <ly-as-4214690>The</ly-as-4214690> <strong>{{ field | replace: '<ly-as-4214691>body</ly-as-4214691>', '<ly-as-4214692>Message</ly-as-4214692>' }}</strong> <ly-as-4214693>field</ly-as-4214693> {{ form.errors.messages[field] }}
+          </li>
+        {% endif %}
+
+      {% endfor %}
+     </ul>
+  </div>
+{% endif %}

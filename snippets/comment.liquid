@@ -1,0 +1,26 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% comment %}
+
+  This snippet generates the structure of a comment.
+  It is used to show not only recent comments, but also comments that were
+  just published but not yet approved.
+
+  More information:
+   - http://docs.shopify.com/themes/liquid-variables/comment
+
+{% endcomment %}
+<div class="comment-head">
+  <span><ly-as-4214634>Posted</ly-as-4214634></span>
+  
+  <span class="comment-date">
+  <ly-as-4214635>On</ly-as-4214635> {{ comment.created_at | date: "%B %d, %Y" }}
+  </span>
+  <span><ly-as-4214636>by</ly-as-4214636></span>
+  <span class="comment-author">
+  {{ comment.author }}
+  </span>
+</div>
+
+
+<div class="comment-content">
+  {% comment %}ly_code_replace_for_[ comment.content ]_begin{% endcomment %}{% include 'ly-content' with comment %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+</div>

@@ -1,0 +1,126 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<div class="top">
+	<div class="brands">
+		<ul>
+			<li>
+				<a href="http://new.staging.minetanbodyskin.com/">
+					<div class="minetan-brand"></div>
+				</a>
+			</li>
+			
+			<li>
+				<a href="http://new.taneasyprotools.com">
+					<div class="taneasy-brand"></div>
+				</a>
+			</li>
+			<!-- <li>
+				<a href="http://fitnesstan.com">
+					<div class="fitness-brand"></div>
+				</a>
+			</li> -->
+			<li>
+				<a href="http://new.btan.rocks">
+					<div class="btan-brand"></div>
+				</a>
+			</li>
+
+			<li>
+				<a href="http://pureblanc.com/" target="_blank">
+					<div class="pure-brand"></div>
+				</a>
+			</li>
+			<li>
+				<a href="http://privatelabeltan.com/" target="_blank">
+					<div class="privatelabel-brand"></div>
+				</a>
+			</li>
+		</ul>
+	</div>
+	{% assign freeShipping = settings.free_shipping_normal %}
+	{% if customer and (customer.tags contains "PRO") %}
+	  {% assign freeShipping = settings.free_shipping_pro %}
+	{% endif %}
+	{% if customer and (customer.tags contains "WHS") %}
+	  {% assign freeShipping = settings.free_shipping_whs %}
+	{% endif %}
+  
+    {% comment %}
+	<div class="freeshipping"><span class="bold">FREE SHIPPING</span> FOR ALL ORDERS OVER {{freeShipping}}</div>
+    {% endcomment %}
+
+	<ul class="topbar-links">
+		{% if shop.customer_accounts_enabled %}
+		{% if customer %}
+		  <li>
+		    <a href="/account"><ly-as-4214694>My Account</ly-as-4214694></a>
+		  </li>
+		  <li>
+		    {{ '<ly-as-4214695>Logout</ly-as-4214695>' | customer_logout_link }}
+		  </li>
+		{% else %}
+		  <li>
+		    {{ '<ly-as-4214696>Join</ly-as-4214696>' | customer_register_link }}
+		  </li>
+		  <li>
+		    {{ '<ly-as-4214697>Login</ly-as-4214697>' | customer_login_link }}
+		  </li>
+		{% endif %}
+		{% endif %}
+		<li>
+			<a href="http://company.marqueofbrands.com/contact/">
+				<ly-as-4214698>Contact</ly-as-4214698>
+			</a>
+		</li>
+		<li>
+			<a href="/pages/wish-list">
+				<ly-as-4214699>Wishlist</ly-as-4214699>
+			</a>
+		</li>
+		<li class="has-dropdown wrapper-top-cart" id="cartToggle">
+            <p class="top-cart">
+              <span class="icon">&nbsp;</span>
+              <a href="javascript:void(0)">
+                <span class="first"><ly-as-4214700>Cart</ly-as-4214700></span>
+                <span id="cartCount">{{ cart.item_count }}</span>
+              </a> 
+            </p>
+            <div id="dropdown-cart" style="display:none"> 
+              <div class="no-items">
+                <p><ly-as-4214701>It appears that your cart is currently empty!</ly-as-4214701></p>
+                <p class="text-continue"><a href="javascript:void(0)"><ly-as-4214702>Continue Shopping</ly-as-4214702></a></p>
+              </div>
+              <div class="has-items">
+                <ol class="mini-products-list">  
+                  {% for item in cart.items %}
+                  <li class="item" id="cart-item-{{item.id}}">
+                    <a href="{{item.url}}" title="{% comment %}ly_code_replace_for_[item.title]_begin{% endcomment %}{% include 'ly-title' with item %}{{ly_translation}}{% comment %}ly_code_replace_end{% endcomment %}" class="product-image"><img src="{{ item.image | product_img_url: 'small' }}" alt="{% comment %}ly_code_replace_for_[item.title]_begin{% endcomment %}{% include 'ly-title' with item %}{{ly_translation}}{% comment %}ly_code_replace_end{% endcomment %}"></a>
+                    <div class="product-details">
+                      <a href="javascript:void(0)" title="<ly-as-4214706>Remove This Item</ly-as-4214706>" class="btn-remove">X</a>
+                      <p class="product-name"><a href="{{item.url}}">{% comment %}ly_code_replace_for_[ item.product.title ]_begin{% endcomment %}{% include 'ly-title' with item.product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></p>
+                      <div class="option">
+                        {% if item.product.variants.size != 0 %}
+                        {% unless item.variant.title contains 'Default' %}
+                        <small>{% comment %}ly_code_replace_for_[ item.variant.title ]_begin{% endcomment %}{% include 'ly-title' with item.variant %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</small>
+                        {% endunless %}
+                        {% endif %}
+                      </div>
+                      <div class="cart-collateral"><span class="price">{{item.price | money}}</span> x {{item.quantity}}</div>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ol>
+                <div class="summary">                
+                  <p class="total">
+                    <span class="label" style="color:#000"><ly-as-4214703>Total:</ly-as-4214703></span>
+                    <span class="price">{{cart.total_price | money}}</span> 
+                  </p>
+                </div>
+                <div class="actions">
+                  <button class="btn" onclick="window.location='/checkout'"><ly-as-4214704>Checkout</ly-as-4214704></button>
+                </div>
+                <p class="text-cart"><a href="/cart"><ly-as-4214705>Or View Cart</ly-as-4214705></a></p>
+              </div>
+            </div>
+		</li>
+	</ul>
+	
+</div>

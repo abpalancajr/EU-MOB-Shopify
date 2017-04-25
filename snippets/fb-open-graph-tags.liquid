@@ -1,0 +1,44 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% comment %}
+
+  Add Facebook Open Graph meta tags to product pages
+  for friendly Facebook sharing content.
+
+  More info Open Graph meta tags
+    - https://developers.facebook.com/docs/opengraph/using-objects/
+
+  Use the Facebook Open Graph Debugger for validation (and cache clearing)
+    - http://developers.facebook.com/tools/debug
+
+{% endcomment %}
+{% if settings.enable_opengraph %}
+{% if template contains 'product' %}
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="{% comment %}ly_code_replace_for_[ product.title | strip_html | escape ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation | strip_html | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+  {% for image in product.images limit:3 %}
+  <meta property="og:image" content="http:{{ image.src | product_img_url: 'grande' }}">
+  <meta property="og:image:secure_url" content="https:{{ image.src | product_img_url: 'grande' }}">
+  {% endfor %}
+  <meta property="og:price:amount" content="{{ bold_price | money_without_currency }}">
+  <meta property="og:price:currency" content="{{ shop.currency }}">
+{% elsif template contains 'article' %}
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{% comment %}ly_code_replace_for_[ article.title | strip_html | escape ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation | strip_html | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+  {% assign img_tag = '<' | append: 'img' %}
+  {% if article.content contains img_tag %}
+    {% assign src = article.content | split: 'src="' %}
+    {% assign src = src[1] | split: '"' | first | remove: 'https:' | remove: 'http:' %}
+    {% if src %}
+  <meta property="og:image" content="http:{{ src }}">
+  <meta property="og:image:secure_url" content="https:{{ src }}">
+    {% endif %}
+  {% endif %}
+{% else %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ langify_title | escape }}">
+{% endif %}
+{% if langify_description %}
+  <meta property="og:description" content="{{ langify_description | escape }}">
+{% endif %}
+{% endif %}
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:site_name" content="{{ langify_shop_name }}">

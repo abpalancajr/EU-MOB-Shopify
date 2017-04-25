@@ -1,0 +1,63 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% if settings.display_breadcrumb %}
+{% comment %}
+  Documentation - http://docs.shopify.com/support/your-website/navigation/creating-a-breadcrumb-navigation
+{% endcomment %}
+{% unless template == 'index' %}
+
+{% if template contains 'collection' %}
+<div class="row">  
+  <div class="block-row col-xs-12 center collection-image">    
+    {% if collection.image %}
+		<img src="{{ collection.image.src | collection_img_url: 'original' }}" alt="{{ collection.image.alt }}" />
+	{% endif %}
+  </div>
+</div>
+{% else %}
+{% endif %}
+
+<div class="breadcrumb">
+  <a href="/collections/{{ homepage }}" title="<ly-as-4214609>Back to the frontpage</ly-as-4214609>"><ly-as-4214608>Home</ly-as-4214608></a>  
+  {% if template contains 'product' %}  
+  {% if collection %}
+  <span class="arrow">/</span>  
+  {% if collection.handle %}
+  {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+  {% comment %}ly_code_replace_for_[ collection.title | link_to: url ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation | link_to: url }}{% comment %}ly_code_replace_end{% endcomment %}
+  {% endif %}
+  {% endif %}
+  
+  <span class="arrow">/</span>
+  <span>{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</span>
+  
+  {% elsif template contains 'collection' and collection.handle %}
+  
+  {% if current_tags %}
+  <span class="arrow">/</span>
+  {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+  {% comment %}ly_code_replace_for_[ collection.title | link_to: url ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation | link_to: url }}{% comment %}ly_code_replace_end{% endcomment %}
+  <span class="arrow">/</span>
+  <span>{{ current_tags.first }}</span>
+  {% else %}
+  <span class="arrow">/</span>
+  <span>{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</span>
+  {% endif %}
+
+  {% elsif template == 'article' %}
+
+  <span class="arrow">/</span>
+  {% comment %}ly_code_replace_for_[ blog.title | link_to: blog.url ]_begin{% endcomment %}{% include 'ly-title' with blog %}{{ ly_translation | link_to: blog.url }}{% comment %}ly_code_replace_end{% endcomment %}
+  <span class="arrow">/</span>
+  <span>{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</span>
+  
+  {% elsif template contains 'page' %}
+
+  <span class="arrow">/</span>
+  <span>{% comment %}ly_code_replace_for_[ page.title ]_begin{% endcomment %}{% include 'ly-title' with page %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</span>
+
+  {% else %}
+  <span class="arrow">/</span>
+  <span>{{ langify_title }}</span>
+  {% endif %}
+</div>
+{% endunless %}
+{% endif %}

@@ -1,0 +1,49 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+{% if selector_product == blank %}
+<div class="swatch error">
+  <p><ly-as-4214822>You must include the snippet swatch.liquid with the name of a product option.</ly-as-4214822></p> 
+  <p><ly-as-4214823>Use:</ly-as-4214823> <code><ly-as-4214824>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</ly-as-4214824></code></p>
+  <p><ly-as-4214825>Example:</ly-as-4214825> <code><ly-as-4214826>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</ly-as-4214826></code></p>
+</div>
+{% else %}
+
+{% assign found_option = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+  {% if option == selector_product %}
+    {% assign found_option = true %}
+    {% assign option_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% unless found_option %}
+<div class="swatch error">
+  <p><ly-as-4214827>You included the snippet swatch.liquid with the name of a product option —</ly-as-4214827> <code>'{{ swatch }}'</code> <ly-as-4214828>— that does not belong to your product.</ly-as-4214828></p>
+  <p><ly-as-4214829>Use</ly-as-4214829> <code><ly-as-4214824>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</ly-as-4214824></code></p>
+  <p><ly-as-4214825>Example:</ly-as-4214825> <code><ly-as-4214826>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</ly-as-4214826></code></p>
+  <p><strong><ly-as-4214830>This is case-sensitive!</ly-as-4214830></strong> <ly-as-4214831>Do not put in</ly-as-4214831> <code><ly-as-4214832>'color'</ly-as-4214832></code> <ly-as-4214833>if your product option name is</ly-as-4214833> <code><ly-as-4214834>'Color'</ly-as-4214834></code>.</p>
+</div>
+{% else %}
+<div class="swatch clearfix" data-option-index="{{ option_index }}" >
+  <div class="header">{{ selector_product }}</div>
+  <input type="hidden" id="selector-{{ option_index }}-value" value="" />
+    <div class="productOptionViewSelect">
+      <select class="validation selector-opition nice-select" id="selector-{{ option_index }}" name="">
+
+        <option value="" selected="selected"> <ly-as-4214835>-- Please Choose an Option --</ly-as-4214835>   </option>
+          {% for variant in product.variants %}
+            {% include 'bold-variant' with variant, hide_action: 'skip'  %}
+            {% assign value = variant.options[option_index] %}
+              <option value={{ variant.id }}>{{ value | escape }}</option>
+          {% endfor %}
+
+      </select> 
+  </div>
+</div>
+
+
+
+{% endunless %}
+
+{% endif %}

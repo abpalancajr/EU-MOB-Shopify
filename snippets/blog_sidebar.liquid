@@ -1,0 +1,29 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<div class="col-xs-3 sidebar">
+  {% include 'widget_article' %}
+  
+  <div class="widget widget-tags">
+    {% if settings.display_blog_tags %}
+    {% if blog.all_tags.size > 0 %}
+    <div class="widget-title">
+      <h3><span><ly-as-4214584>Tags</ly-as-4214584></span></h3>
+    </div>
+    <div class="widget-content">
+      <ul class="tags">
+        <li{% unless current_tags %} class="active"{% endunless %}>
+          <a href="{{ shop.url}}/blogs/{{ blog.handle }}"><ly-as-4214585>All</ly-as-4214585></a>
+        </li>
+        {% for tag in blog.all_tags %}
+        {% if current_tags contains tag %}
+        <li class="active">{{ tag | link_to_remove_tag: tag }}</li>
+        {% else %}
+        <li>{{ tag | link_to_tag: tag }}</li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% endif %}
+  </div>
+  {% include 'collection-sidebar-banner-block' %}
+  {% include 'collection-sidebar-custom-cms-block' %}
+</div>

@@ -1,0 +1,33 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<div class="loading-modal modal"><ly-as-4214739>Loading...</ly-as-4214739></div>
+<div class="ajax-error-modal modal">
+  <div class="modal-inner">
+    <div class="ajax-error-title"><ly-as-4214740>Error</ly-as-4214740></div>
+    <div class="ajax-error-message"></div>
+  </div>
+</div>
+<div class="ajax-success-modal modal">
+  	<div class="overlay"></div>
+	<div class="content">
+      <div class="ajax-left">
+        <img class="ajax-product-image" alt="&nbsp;" src="" style="max-width:65px; max-height:100px"/>
+      </div>
+      <div class="ajax-right">
+        <p class="ajax-product-title"></p>
+        <p class="success-message btn-go-to-cart"><ly-as-4214741>is added to your shopping cart.</ly-as-4214741></p>
+        <p class="success-message btn-go-to-wishlist"><ly-as-4214742>is added to your wish list.</ly-as-4214742></p>        
+        <div class="actions">
+          <button class="btn-secondary continue-shopping" onclick="javascript:void(0)"><ly-as-4214743>Continue Shopping</ly-as-4214743></button>
+          
+          <!-- Add view query -->
+          {% assign cart_url = "/cart" %}
+          {% if cart_template != nil %}
+          {% assign cart_url = "/cart?view=" | append: cart_template %}
+          {% endif %}
+          <button class="btn-secondary btn-go-to-cart" onclick="window.location='{{cart_url}}'"><ly-as-4214744>Go To Cart</ly-as-4214744></button>
+
+          <button class="btn-secondary btn-go-to-wishlist" onclick="window.location='/pages/wish-list'"><ly-as-4214745>Go To Wishlist</ly-as-4214745></button>
+        </div>
+      </div>
+    <a href="javascript:void(0)" class="close-modal"><ly-as-4214746>Close</ly-as-4214746></a>
+ 	</div>    
+</div>

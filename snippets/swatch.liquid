@@ -1,0 +1,82 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% comment %}
+  Set the extension of your color files below. Use 'png', 'jpeg', 'jpg' or 'gif'.
+{% endcomment %}
+
+{% assign file_extension = 'png' %}
+
+{% if swatch == blank %}
+<div class="swatch error">
+  <p><ly-as-4214860>You must include the snippet swatch.liquid with the name of a product option.</ly-as-4214860></p> 
+  <p><ly-as-4214861>Use:</ly-as-4214861> <code><ly-as-4214862>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</ly-as-4214862></code></p>
+  <p><ly-as-4214863>Example:</ly-as-4214863> <code><ly-as-4214864>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</ly-as-4214864></code></p>
+</div>
+{% else %}
+
+{% assign found_option = false %}
+{% assign is_color = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+  {% if option == swatch %}
+    {% assign found_option = true %}
+    {% assign option_index = forloop.index0 %}
+    <style>
+      label[for="product-select-option-{{ option_index }}"] { display: none; }
+      #add-to-cart-form .selector-wrapper {display:none}
+      #product-select-option-{{ option_index }} { display: none; }
+      #product-select-option-{{ option_index }} + .custom-style-select-box { display: none !important; }
+    </style>
+<script>//jQuery(window).load(function() { jQuery('.product-shop .selector-wrapper:eq({{ option_index }})').hide(); });</script>
+    {% assign downcased_option = swatch | downcase %}
+    {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+      {% assign is_color = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% unless found_option %}
+<div class="swatch error">
+  <p><ly-as-4214865>You included the snippet swatch.liquid with the name of a product option —</ly-as-4214865> <code>'{{ swatch }}'</code> <ly-as-4214866>— that does not belong to your product.</ly-as-4214866></p>
+  <p><ly-as-4214867>Use</ly-as-4214867> <code><ly-as-4214862>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</ly-as-4214862></code></p>
+  <p><ly-as-4214863>Example:</ly-as-4214863> <code><ly-as-4214864>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</ly-as-4214864></code></p>
+  <p><strong><ly-as-4214868>This is case-sensitive!</ly-as-4214868></strong> <ly-as-4214869>Do not put in</ly-as-4214869> <code><ly-as-4214870>'color'</ly-as-4214870></code> <ly-as-4214871>if your product option name is</ly-as-4214871> <code><ly-as-4214872>'Color'</ly-as-4214872></code>.</p>
+</div>
+{% else %}
+<div class="swatch clearfix" data-option-index="{{ option_index }}">
+  <div class="header">{{ swatch }}</div>
+  {% assign values = '' %}
+  {% for variant in product.variants %}
+    {% include 'bold-hidden-variants' with variant, bold_loop: 'loop' %}
+    {% assign value = variant.options[option_index] %}
+    {% unless values contains value %}
+      {% assign values = values | join: ',' %}	
+      {% assign values = values | append: ',' | append: value %} 
+      {% assign values = values | split: ',' %}
+      <div data-value="{{ value | escape }}" class="swatch-element {% if is_color %}color {% endif %}{{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+        {% if is_color %}
+        <div class="tooltip">{{ value }}</div>
+        {% endif %}
+        <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+        {% if is_color %}
+        <label for="swatch-{{ option_index }}-{{ value | handle }}" style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | append: '.' | append: file_extension | file_url }})">
+          <img class="crossed-out" src="{% comment %}ly_asset_replace_for_[ 'soldout.png' | asset_url ]_begin{% endcomment %}{% assign ly_asset = 'soldout.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}" />
+        </label>
+        {% else %}
+        <label for="swatch-{{ option_index }}-{{ value | handle }}">
+          {{ value }}
+          <img class="crossed-out" src="{% comment %}ly_asset_replace_for_[ 'soldout.png' | asset_url ]_begin{% endcomment %}{% assign ly_asset = 'soldout.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}" />
+        </label>
+        {% endif %}
+      </div>
+    {% endunless %}
+    {% if variant.available %}
+    <script>
+      jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+    </script>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% endunless %}
+
+{% endif %}

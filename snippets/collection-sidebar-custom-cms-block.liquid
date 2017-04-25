@@ -1,0 +1,8 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<div class="sidebar-cms-custom">
+  <div class="widget-title">
+      <h3><span>{% comment %}ly_new_settings_replace_for_[ settings.custom_cms_title ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id4214618"] %}{% assign ly_translation = shop.metafields[namespace]["id4214618"] %}{% else %}{% assign ly_translation = settings.custom_cms_title %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}</span></h3>
+  </div>
+  <div class="widget-content">
+    {% comment %}ly_new_settings_replace_for_[ settings.custom_cms_text ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id4214619"] %}{% assign ly_translation = shop.metafields[namespace]["id4214619"] %}{% else %}{% assign ly_translation = settings.custom_cms_text %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}
+  </div>
+</div>

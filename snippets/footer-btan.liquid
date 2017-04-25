@@ -1,0 +1,116 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<footer class="site-footer footer-btan" role="contentinfo">
+  <div class="container">
+    <div class="footer-top"> 
+      <div class="row">
+
+        {% comment %}
+        {% if settings.footer_column_1_title != blank %}
+        <div class="col-1 wow fadeInUp" data-wow-delay="{% comment %}ly_new_settings_replace_for_[ settings.time_lazy_load ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id4214643"] %}{% assign ly_translation = shop.metafields[namespace]["id4214643"] %}{% else %}{% assign ly_translation = settings.time_lazy_load %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}ms">
+          <ul>
+            {% for link in linklists.btan-footer-column-1.links %}
+            <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        {% if settings.footer_column_2_title != blank %}
+        <div class="col-2 wow fadeInUp" data-wow-delay="{{ settings.time_lazy_load | times: 2 }}ms">
+          <ul>
+            {% for link in linklists.btan-footer-column-2.links %}
+            <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        {% endcomment %}
+
+        <div class="col-4 wow fadeInUp" data-wow-delay="{% comment %}ly_new_settings_replace_for_[ settings.time_lazy_load ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id4214643"] %}{% assign ly_translation = shop.metafields[namespace]["id4214643"] %}{% else %}{% assign ly_translation = settings.time_lazy_load %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}ms">
+          <p class="cosmoprof"><a href="http://new.staging.minetanbodyskin.com/cosmoprof"><img src={% comment %}ly_asset_replace_for_[ 'cosmoprof.png' | asset_url ]_begin{% endcomment %}{% assign ly_asset = 'cosmoprof.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %} alt="#"></a></p>
+          {% include 'social-btan' %}
+        </div>
+
+        <div class="col-5 wow fadeInUp last" data-wow-delay="{{ settings.time_lazy_load | times: 4 }}ms">
+          <p class="taneasy-warranty"><a href="http://new.taneasyprotools.com/warranty-guarantee/"><span class="bold">REGISTRATION &amp; WARRANTY</span> <ly-as-4214645>FOR YOUR TAN.EASY MACHINE</ly-as-4214645></a></p>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="very-bottom-footer">
+    <div class="container">
+      <div class="footer-text">
+        <p class="brands"><a href="http://new.btan.rocks/?choose-country">{% comment %}ly_asset_replace_for_[ 'uk.png' | asset_url | img_tag: 'UK', '<ly-as-4214646>flag</ly-as-4214646>' ]_begin{% endcomment %}{% assign ly_asset = 'uk.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag: 'UK', '<ly-as-4214646>flag</ly-as-4214646>' }}{% comment %}ly_asset_replace_end{% endcomment %}<span class="country-selector"><ly-as-4214647>COUNTRY SELECTOR</ly-as-4214647></span></a><ly-as-4214648>© 2017 MARQUE OF BRANDS PTY LTD. ALL RIGHTS RESERVED</ly-as-4214648></p>
+      </div>
+      <div class="bottom-footer-menu">
+        <ul id="very-bottom-footer-menu" class="menu">
+          {% for link in linklists.btan-very-bottom-footer-menu.links %}
+            <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="quickViewOverlay_CountrySelector"></div>
+  <div id="quickViewResponseData_CountrySelector">
+    <div class="close-quickview">
+      {% comment %}ly_asset_replace_for_[ 'icon-close.png' | asset_url | img_tag: 'close' ]_begin{% endcomment %}{% assign ly_asset = 'icon-close.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag: 'close' }}{% comment %}ly_asset_replace_end{% endcomment %}
+    </div>
+    <p class="title"><ly-as-4214649>SELECT YOUR REGION</ly-as-4214649></p>
+    <ul class="country-selector">
+      <li>
+        <a href="http://new.btan.rocks/?country=us">{% comment %}ly_asset_replace_for_[ 'us.png' | asset_url | img_tag: 'US', '<ly-as-4214646>flag</ly-as-4214646>' ]_begin{% endcomment %}{% assign ly_asset = 'us.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag: 'US', '<ly-as-4214646>flag</ly-as-4214646>' }}{% comment %}ly_asset_replace_end{% endcomment %}<ly-as-4214650>USA & Canada</ly-as-4214650></a>
+      </li>
+      <li>
+        <a href="http://new.btan.rocks/?country=uk">{% comment %}ly_asset_replace_for_[ 'uk.png' | asset_url | img_tag: 'UK', '<ly-as-4214646>flag</ly-as-4214646>' ]_begin{% endcomment %}{% assign ly_asset = 'uk.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag: 'UK', '<ly-as-4214646>flag</ly-as-4214646>' }}{% comment %}ly_asset_replace_end{% endcomment %}<ly-as-4214651>United Kingdom</ly-as-4214651></a>
+      </li>
+      <li>
+        <a href="http://new.btan.rocks/?country=eu">{% comment %}ly_asset_replace_for_[ 'eu.png' | asset_url | img_tag: 'EU', '<ly-as-4214646>flag</ly-as-4214646>' ]_begin{% endcomment %}{% assign ly_asset = 'eu.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag: 'EU', '<ly-as-4214646>flag</ly-as-4214646>' }}{% comment %}ly_asset_replace_end{% endcomment %}<ly-as-4214652>Europe</ly-as-4214652></a>
+      </li>
+      <li>
+        <a href="http://new.btan.rocks/?country=au">{% comment %}ly_asset_replace_for_[ 'au.png' | asset_url | img_tag: 'AU', '<ly-as-4214646>flag</ly-as-4214646>' ]_begin{% endcomment %}{% assign ly_asset = 'au.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag: 'AU', '<ly-as-4214646>flag</ly-as-4214646>' }}{% comment %}ly_asset_replace_end{% endcomment %}<ly-as-4214653>Australia & NZ</ly-as-4214653></a>
+      </li>
+    </ul>
+  </div>
+  <script>
+    jQuery(document).ready(function($) {
+      function showQuickviewCountrySelector() {
+        $('#quickViewResponseData_CountrySelector').show();
+        $('#quickViewOverlay_CountrySelector').show();
+      }
+      function hideQuickviewCountrySelector() {
+        $('#quickViewResponseData_CountrySelector').hide();
+        $('#quickViewOverlay_CountrySelector').hide();
+      }
+      
+      $('.close-quickview').on('click', function(){
+        hideQuickviewCountrySelector();
+      });
+      
+      $('#quickViewOverlay_CountrySelector').on('click', function(e){
+        if(e.target !== e.currentTarget) return;
+        hideQuickviewCountrySelector();
+      });
+
+      $('a[href*="choose-country"]').on('click', function(e) { // filter choose country links
+        e.preventDefault();
+        showQuickviewCountrySelector();
+      });
+
+      var url = window.location.href.toLowerCase();
+      var curSrc = $('.brands .flag').attr('src');
+      if (url.indexOf("us.store") >= 0) {
+        curSrc = curSrc.replace('uk.png', 'us.png');
+      }
+      if (url.indexOf("eu.store") >= 0) {
+        curSrc = curSrc.replace('uk.png', 'eu.png');
+      }
+      if (url.indexOf("au.store") >= 0) {
+        curSrc = curSrc.replace('uk.png', 'au.png');
+      }
+      $('.brands .flag').attr('src', curSrc);
+    });
+  </script>
+</footer>
+
+{% include 'message-modal' %}

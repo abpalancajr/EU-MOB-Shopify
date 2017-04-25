@@ -1,0 +1,7 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<ul class="dropdown-menu" role="menu"> 
+  {% if settings.top_bar_linklist != blank %}
+  {% for link in linklists[settings.top_bar_linklist].links %}
+  <li><a href="{{ link.url }}" title="{% comment %}ly_code_replace_for_[ link.title ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">{% comment %}ly_code_replace_for_[ link.title ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></li>
+  {% endfor %}
+  {% endif %}
+</ul>

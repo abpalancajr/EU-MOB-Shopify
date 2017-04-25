@@ -1,0 +1,27 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<ul class="pagination-page">
+  {% if paginate.previous %}
+    <li><a href="{{ paginate.previous.url }}" title="{% comment %}ly_code_replace_for_[ paginate.previous.title ]_begin{% endcomment %}{% include 'ly-title' with paginate.previous %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">&larr;</a></li>
+  {% else %}
+    <li class="disabled"><span>&larr;</span></li>
+  {% endif %}
+
+  {% for part in paginate.parts %}
+    {% if part.is_link %}
+      <li>
+        <a href="{{ part.url }}" title="">{% comment %}ly_code_replace_for_[ part.title ]_begin{% endcomment %}{% include 'ly-title' with part %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+      </li>
+    {% else %}
+      {% if part.title == paginate.current_page %}
+        <li class="active"><span>{% comment %}ly_code_replace_for_[ part.title ]_begin{% endcomment %}{% include 'ly-title' with part %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</span></li>
+      {% else %}
+        <li><span>{% comment %}ly_code_replace_for_[ part.title ]_begin{% endcomment %}{% include 'ly-title' with part %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</span></li>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if paginate.next %}
+    <li><a href="{{ paginate.next.url }}" title="{% comment %}ly_code_replace_for_[ paginate.next.title ]_begin{% endcomment %}{% include 'ly-title' with paginate.next %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">&rarr;</a></li>
+  {% else %}
+    <li class="disabled"><span>&rarr;</span></li>
+  {% endif %}
+</ul>

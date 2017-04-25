@@ -1,0 +1,54 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<div class="toolbar">
+  <div class="view-mode">
+    <label><ly-as-4214875>View as</ly-as-4214875></label>
+    <!--<span class="grid" title="Grid view"><ly-as-4214876>Grid</ly-as-4214876></span>-->
+    <a class="grid" href="grid" title="<ly-as-4214889>Grid view</ly-as-4214889>"><ly-as-4214876>Grid</ly-as-4214876></a>  
+    <a class="list active" href="list" title="<ly-as-4214890>List view</ly-as-4214890>"><ly-as-4214877>List</ly-as-4214877></a>  
+  </div>
+  
+    <div class="filter-show btn-group">
+      <label><ly-as-4214878>Show</ly-as-4214878></label>
+      <button class="btn btn-2 dropdown-toggle" data-toggle="dropdown">
+        <i class="icon-exchange"></i>
+        {% if paginate.page_size != 50 %}
+        <span>{{paginate.page_size}}</span>
+        {% else %}
+        <span><ly-as-4214879>all</ly-as-4214879></span>
+        {% endif %}
+        <i class="icon-chevron-down"></i>
+      </button>
+      
+      <ul class="dropdown-menu" role="menu">
+        {% if settings.collection_results_per_page != blank %}
+        {% assign product_per_page = settings.collection_results_per_page %}
+        {% else %}
+        {% assign product_per_page = 12 %}
+        {% endif %}
+        {% assign current_page_size = paginate.page_size %}
+        <li {% if current_page_size == 12 %} class="active" {% endif %}><a href="{{ product_per_page }}">{{ product_per_page }}</a></li>
+       	<li {% if current_page_size == 16 %} class="active" {% endif %} ><a href="16">16</a></li>
+       	<li {% if current_page_size == 32 %} class="active" {% endif %}><a href="32">32</a></li>
+       	<li {% if current_page_size == 50 %} class="active" {% endif %}><a href="all"><ly-as-4214879>all</ly-as-4214879></a></li>         
+      </ul>
+    </div>
+    
+    <div class="filter-sortby btn-group">
+      <label for="sort-by"><ly-as-4214880>Sort by</ly-as-4214880></label> 
+      <button class="btn btn-2 dropdown-toggle" data-toggle="dropdown">
+        <i class="icon-exchange"></i>
+        <span><ly-as-4214881>Featured</ly-as-4214881></span>
+        <i class="icon-chevron-down"></i>
+      </button>
+      
+      <ul class="dropdown-menu" role="menu">
+        <li class="active"><a href="manual"><ly-as-4214881>Featured</ly-as-4214881></a></li>
+        <li><a href="price-ascending"><ly-as-4214882>Price: Low to High</ly-as-4214882></a></li>
+        <li><a href="price-descending"><ly-as-4214883>Price: High to Low</ly-as-4214883></a></li>
+        <li><a href="title-ascending"><ly-as-4214884>A-Z</ly-as-4214884></a></li>
+        <li><a href="title-descending"><ly-as-4214885>Z-A</ly-as-4214885></a></li>
+        <li><a href="created-ascending"><ly-as-4214886>Oldest to Newest</ly-as-4214886></a></li>
+        <li><a href="created-descending"><ly-as-4214887>Newest to Oldest</ly-as-4214887></a></li>
+        <li><a href="best-selling"><ly-as-4214888>Best Selling</ly-as-4214888></a></li>
+      </ul>
+    </div> 
+</div>

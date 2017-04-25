@@ -1,0 +1,35 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% comment %}
+  This snippet is used to showcase each collection during the loop,
+  'for product in collection.products' in list-collections.liquid.
+{% endcomment %}
+
+{% assign delayTime = 200 | times : forloop.index %}
+<div class="grid-item wow fadeIn col-xs-12 col-sm-4" data-wow-delay="{{delayTime}}ms">
+
+  {% comment %}
+    Use capture to put the collection title in a variable that is used in liquid filters
+  {% endcomment %}
+  
+  {% capture collection_title %}{% comment %}ly_code_replace_for_[ collection.title | escape ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}{% endcapture %}
+  <div class="product-top">
+    <a href="{{ collection.url }}" title="{{ collection_title }}">
+      {% if collection.image %}
+      {{ collection.image.src | collection_img_url: 'large' | img_tag: collection_title }}
+      {% else %}
+      {{ collection.products.first.featured_image | product_img_url: 'large' | img_tag: collection_title }}
+      {% endif %}
+      <div class="hover"></div>
+    </a>
+    <a href="{{ collection.url }}" class="view">&nbsp;</a>
+  </div>
+  <div class="collection-title-wrapper">
+    <div class="collection-title">
+      <h3 class="h5">
+        <a href="{{ collection.url }}" title="<ly-as-4214616>Browse our</ly-as-4214616> {{ collection_title }} <ly-as-4214617>collection</ly-as-4214617>">{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+      </h3>
+      <p class="count-products">{{ collection.all_products_count }} {{ collection.all_products_count | pluralize: '<ly-as-4214613>product</ly-as-4214613>', '<ly-as-4214614>products</ly-as-4214614>' }}</p>
+      <p class="desc">{% comment %}ly_code_replace_for_[ collection.description | strip_html | truncatewords: 14 ]_begin{% endcomment %}{% include 'ly-description' with collection %}{{ ly_translation | strip_html | truncatewords: 14 }}{% comment %}ly_code_replace_end{% endcomment %}</p>
+      <p><a href="{{ collection.url }}" title="<ly-as-4214615>Shop The Collection</ly-as-4214615>" class="btn"><ly-as-4214615>Shop The Collection</ly-as-4214615></a></p>
+    </div>
+  </div>
+</div>

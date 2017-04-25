@@ -1,0 +1,33 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% if shop.customer_accounts_enabled %}
+{% if customer %}
+<ul class="customer-links">
+  {% if settings.enable_wishlist %}
+  <li class="wishlist">
+    <span class="icon">&nbsp;</span>
+    <a href="/pages/wish-list" title="<ly-as-4214637>My Wishlist</ly-as-4214637>"><ly-as-4214637>My Wishlist</ly-as-4214637></a>
+  </li>
+  {% endif %}
+  <li>
+    {{ '<ly-as-4214638>Logout</ly-as-4214638>' | customer_logout_link }}
+    <span class="or"><ly-as-4214639>or</ly-as-4214639></span>
+    <a href="/account"><ly-as-4214640>My Account</ly-as-4214640></a>
+  </li>
+</ul>
+{% else %}
+<ul class="customer-links">
+  {% if settings.enable_wishlist %}
+  <li class="wishlist">
+    <span class="icon">&nbsp;</span>
+    <a href="/pages/wish-list" title="<ly-as-4214637>My Wishlist</ly-as-4214637>"><ly-as-4214637>My Wishlist</ly-as-4214637></a>
+  </li>
+  {% endif %}
+  <li>
+    {{ '<ly-as-4214641>Sign In</ly-as-4214641>' | customer_login_link }}
+    {% if shop.customer_accounts_optional %}
+    <span class="or"><ly-as-4214639>or</ly-as-4214639></span>
+    {{ '<ly-as-4214642>Create an account</ly-as-4214642>' | customer_register_link }}
+    {% endif %}
+  </li>
+</ul>
+{% endif %}
+{% endif %}

@@ -1,0 +1,101 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- Footer scripts -->
+{% comment %}ly_asset_replace_for_[ 'bootstrap.min.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'bootstrap.min.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}  
+{{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+{% comment %}ly_asset_replace_for_[ 'owl.carousel.min.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'owl.carousel.min.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'jquery.jcarousel.latest.min.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'jquery.jcarousel.latest.min.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'jquery.elevateZoom-3.0.8.min.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'jquery.elevateZoom-3.0.8.min.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'jquery.fancybox.pack.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'jquery.fancybox.pack.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'jquery.fakecrop.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'jquery.fakecrop.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'jquery.countdown.min.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'jquery.countdown.min.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{%  include 'new-currency' %}
+{% comment %}ly_asset_replace_for_[ 'jquery.history.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'jquery.history.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'bold-helper-functions.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'bold-helper-functions.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'ella.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'ella.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'modernizr.custom.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'modernizr.custom.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'classie.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'classie.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% comment %}ly_asset_replace_for_[ 'registration_mailchimp.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'registration_mailchimp.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+
+
+<script>
+  var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+  	  showLeftPush = document.getElementById( 'showLeftPush' ),
+      body = document.body;
+
+  if (showLeftPush != null) {
+    showLeftPush.onclick = function() {
+        classie.toggle( this, 'active' );
+        classie.toggle( body, 'cbp-spmenu-push-toright' );
+        classie.toggle( menuLeft, 'cbp-spmenu-open' );
+    };
+  }
+</script>
+
+{% if settings.enable_lazy_loading_pc or settings.enable_lazy_loading_mobile %}
+{% comment %}ly_asset_replace_for_[ 'wow.min.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'wow.min.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+{% endif %}
+
+<script>
+function isMobileFunc() { 
+    var userAgent = navigator.userAgent.toLowerCase();   
+    var phone = (/iphone|android|ipod|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(userAgent));
+    var tablet = (/ipad|sch-i800|playbook|tablet|kindle|gt-p1000|sgh-t849|shw-m180s|a510|a511|a100|dell streak|silk/i.test(userAgent));
+    return phone || tablet;
+}
+var enable_lazy_loading_pc = {{settings.enable_lazy_loading_pc}};
+var enable_lazy_loading_mobile = {{settings.enable_lazy_loading_mobile}};
+var isMobile = isMobileFunc();
+
+if ((enable_lazy_loading_pc && !isMobile) || (enable_lazy_loading_mobile && isMobile)) {
+	new WOW().init({offset:50});
+}
+  
+if (isMobile) {
+  var currentEl;
+  jQuery('.site-nav .dropdown > a').bind('click', function(event) {
+      if (currentEl != this) {
+          event.preventDefault();
+          currentEl = this;
+      }
+  });
+}
+</script>
+
+{% if settings.display_fixtop_menu %}
+<script>
+  var heightHeader = jQuery('.site-header').outerHeight() - jQuery('.nav-bar').outerHeight();
+  
+  /*---------- CART HEADER STTROPEZ Start  ----------*/
+  if (jQuery('.site-header.sttropez').outerHeight() != null) {
+    heightHeader = jQuery('.site-header.sttropez').outerHeight() - jQuery('.nav-bar').outerHeight();
+  }
+  /*---------- CART HEADER STTROPEZ End  ----------*/
+
+  var heightTop = jQuery('.site-header').outerHeight();
+
+  jQuery(window).scroll(function () {
+    if (jQuery(".visible-phone").is(":hidden")) {
+      var scrollTop = jQuery(this).scrollTop();
+      var w = window.innerWidth;
+
+      if (scrollTop > heightHeader) {
+        if (w > 767) {
+          jQuery('.header-bottom').addClass('on');
+          jQuery('.nav-search').removeClass('on');
+          jQuery('.main-content').css('padding-top',heightHeader);
+        } 
+        else {
+          jQuery('.header-bottom').removeClass('on');
+          jQuery('.nav-search').addClass('on');
+          jQuery('.main-content').css('padding-top',0);
+        }
+      }
+      else {
+        jQuery('.header-bottom').removeClass('on');
+        jQuery('.nav-search').addClass('on');
+        jQuery('.main-content').css('padding-top',0);
+      }
+    }
+  });
+</script>
+{% endif %}

@@ -1,0 +1,92 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% if settings.show_tab == 'horizontal' %}
+<div class="panel-group">
+  <ul class="nav nav-tabs" id="myTab">
+    {% if settings.display_product_detail_description %}
+    <li class="active"><a data-toggle="tab" href="#collapse-tab1">{% comment %}ly_new_settings_replace_for_[ settings.product_description_title ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id4214793"] %}{% assign ly_translation = shop.metafields[namespace]["id4214793"] %}{% else %}{% assign ly_translation = settings.product_description_title %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}</a></li>
+    {% endif %}
+
+    {% assign productMetafields = product.metafields.product %}
+
+    {% if productMetafields.results %}
+    <li><a data-toggle="tab" href="#collapse-results"><ly-as-4214794>Results</ly-as-4214794></a></li>
+    {% endif %}
+
+    {% if productMetafields.howtouse %}
+    <li><a data-toggle="tab" href="#collapse-howtouse"><ly-as-4214795>How To Use</ly-as-4214795></a></li>
+    {% endif %}
+
+    {% if productMetafields.ingredients %}
+    <li><a data-toggle="tab" href="#collapse-ingredients"><ly-as-4214796>Ingredients</ly-as-4214796></a></li>
+    {% endif %}
+    
+    {% if settings.display_custom_tab %}
+    <li><a data-toggle="tab" href="#collapse-tab2">{% comment %}ly_new_settings_replace_for_[ settings.custom_tab_title ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id4214797"] %}{% assign ly_translation = shop.metafields[namespace]["id4214797"] %}{% else %}{% assign ly_translation = settings.custom_tab_title %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}</a></li>
+    {% endif %}
+    
+    {% if settings.display_size_chart %}
+    <li><a data-toggle="tab" href="#collapse-tab3">{% comment %}ly_new_settings_replace_for_[ settings.custom_size_chart_title ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id4214798"] %}{% assign ly_translation = shop.metafields[namespace]["id4214798"] %}{% else %}{% assign ly_translation = settings.custom_size_chart_title %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}</a></li>
+    {% endif %}
+    
+    {% if settings.display_product_reviews %}       
+    <li><a data-toggle="tab" href="#collapse-tab4">{% comment %}ly_new_settings_replace_for_[ settings.product_review_title ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id4214799"] %}{% assign ly_translation = shop.metafields[namespace]["id4214799"] %}{% else %}{% assign ly_translation = settings.product_review_title %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}</a></li>
+    {% endif %}
+  </ul>
+
+  <div id="myTabContent" class="tab-content">
+    {% if settings.display_product_detail_description %}        
+      {% if product.description contains '[countdown]' %}            
+      {% assign des = product.description | split:'[/countdown]</p>' | last %}
+      <div id="collapse-tab1" class="tab-pane fade in active">{{ des }}</div>
+      {% else %}
+      <div id="collapse-tab1" class="tab-pane fade in active">{% comment %}ly_code_replace_for_[ product.description ]_begin{% endcomment %}{% include 'ly-description' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</div>
+      {% endif %}
+    {% endif %}
+
+    {% if productMetafields.results %}
+    <div id="collapse-results" class="tab-pane fade">
+      {{ productMetafields.results }}
+    </div>
+    {% endif %}
+
+    {% if productMetafields.howtouse %}
+    <div id="collapse-howtouse" class="tab-pane fade">
+      {{ productMetafields.howtouse }}
+    </div>
+    {% endif %}
+
+    {% if productMetafields.ingredients %}
+    <div id="collapse-ingredients" class="tab-pane fade">
+      {{ productMetafields.ingredients }}
+    </div>
+    {% endif %}
+    
+    {% if settings.display_custom_tab %}
+    <div id="collapse-tab2" class="tab-pane fade">
+      {% comment %}ly_new_settings_replace_for_[ settings.custom_tab_content ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id4214800"] %}{% assign ly_translation = shop.metafields[namespace]["id4214800"] %}{% else %}{% assign ly_translation = settings.custom_tab_content %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}
+    </div>
+    {% endif %}
+    
+    {% if settings.display_size_chart %}
+    <div id="collapse-tab3" class="tab-pane fade">
+      {% comment %}ly_asset_replace_for_[ 'custom_size_chart_content.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'custom_size_chart_content.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+    </div>
+    {% endif %}
+    
+    {% if settings.display_product_reviews %}       
+    <div id="collapse-tab4" class="tab-pane fade">
+      {% comment %}
+        Add product review widget, must install Product Review App:
+        https://apps.shopify.com/product-reviews
+      {% endcomment %}
+      <div id="shopify-product-reviews" data-id="{{product.id}}">{% comment %}ly_code_replace_for_[ product.metafields.spr.reviews ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign ns = language | append: 'spr' %}{% assign key = 'reviews' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.spr.reviews  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<script>
+jQuery('#myTab a').click(function (e) {
+  e.preventDefault();
+  jQuery(this).tab('show');
+})
+</script>    
+{% endif %}

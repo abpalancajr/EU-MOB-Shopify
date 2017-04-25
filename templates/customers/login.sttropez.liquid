@@ -1,0 +1,447 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% comment %}
+  This template will be automatically generated for you if the file doesn't exist,
+  but where's the fun in having no control? Define your layout below.
+
+  The 'layout settings.customer_layout' line is inserted at the top of every customer account template.
+  Your theme's settings determine to use the 'default' or 'theme' customer templates.
+  More info:
+    - http://www.tetchi.ca/shopify-theme-from-scratch-part-11/
+
+  Template note:
+    - All IDs on this template are required to make the forms submit properly
+    - There are two instances of inline JS below. Best practices advise separating this
+      into an external JS file.
+{% endcomment %}
+
+{% layout settings.customer_layout %}
+
+{% comment %}ly_asset_replace_for_[ 'jquery.form-validator.min.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'jquery.form-validator.min.js' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}  
+
+<div class="login-page" id="mob-login-page">
+  {% comment %}
+    If a user has successfully requested a new password, the form.posted_successfully? variable
+    is set to true within the 'recover_customer_password' form only. Within that form you'll see
+    us assign a variable 'reset_success' to true, which is used in JS to show our success message.
+  {% endcomment %}
+
+  <header class="mob-login-header row">
+    <div class="col-sm-6 hidden-xs ipad">
+      {% comment %}ly_asset_replace_for_[ 'ipad.png' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'ipad.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+    </div>
+    <div class="col-sm-6 col-xs-12 brands">
+      <h2><ly-as-4215076>One Account STTROPEZ</ly-as-4215076><br><ly-as-4215077>For all these amazing</ly-as-4215077><br><ly-as-4215078>brands</ly-as-4215078></h2>
+      {% comment %}ly_asset_replace_for_[ 'brand-logos.png' | asset_url | img_tag: 'Brand Logos', '<ly-as-4215079>brand-logos</ly-as-4215079>' ]_begin{% endcomment %}{% assign ly_asset = 'brand-logos.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag: 'Brand Logos', '<ly-as-4215079>brand-logos</ly-as-4215079>' }}{% comment %}ly_asset_replace_end{% endcomment %}
+      <p><ly-as-4215080>Sign in OR Sign up below</ly-as-4215080></p>
+    </div>
+  </header>
+  
+  <section class="mob-forms-section">
+    <div class="forms-container">
+      <div class="note form-success" id="resetSuccess" style="display:none;">
+        <ly-as-4215081>We've sent you an email with a link to update your password.</ly-as-4215081>
+      </div>
+      
+      {% comment %}
+        This form must use 'customer_login'
+      {% endcomment %}
+      {% form 'customer_login' %}
+      <h3><ly-as-4215082>SIGN IN</ly-as-4215082></h3>
+      {% include 'form-errors-custom' %}
+      <div id="email">
+        <label for="customer_email"><ly-as-4215083>Email Address</ly-as-4215083><em>*</em></label>
+        <input type="email" value="" name="customer[email]" id="customer_email" {% if form.errors contains "email" %} class="error"{% endif %} data-validation="required">
+      </div>
+      
+      {% if form.password_needed %}
+      <div id="password">
+        <label for="customer_password"><ly-as-4215084>Password</ly-as-4215084><em>*</em></label>
+        <input type="password" value="" name="customer[password]" id="customer_password" {% if form.errors contains "password" %} class="error"{% endif %} data-validation="required">
+      </div>
+      {% endif %}
+      
+      <div class="action-btn">
+        <p><input type="submit" class="btn" value="<ly-as-4215116>Login</ly-as-4215116>"></p>
+        <p class="last">
+          <a href="#" onclick="showRecoverPasswordForm();return false;"><ly-as-4215085>Forgot your password?</ly-as-4215085></a>
+        </p>
+      </div>
+      {% endform %}
+      
+      {% comment %}
+        This page uses JavaScript to show/hide the recover password form
+      {% endcomment %}
+      <div id="recover_password" style="display: none;">
+        <h3><ly-as-4215086>Reset your password</ly-as-4215086></h3>
+        <p><ly-as-4215087>We will send you an email to reset your password.</ly-as-4215087></p>
+        
+        {% comment %}
+          This form must use 'recover_customer_password'
+        {% endcomment %}
+        {% form 'recover_customer_password' %}
+        
+        {% include 'form-errors-custom' %}
+        
+        {% comment %}
+          form.posted_successfully? is true only inside this form, but we want
+          to show a success message outside of it. To do so, set the variable
+          reset_success to true, then use JS to show our success message above.
+        {% endcomment %}
+        {% if form.posted_successfully? %}
+        {% assign reset_success = true %}
+        {% endif %}
+        
+        <label for="recover-email"><ly-as-4215088>Email</ly-as-4215088></label>
+        <input type="email" value="" name="email" id="recover-email" placeholder="<ly-as-4215121>your-email@shopify.com</ly-as-4215121>" data-validation="required">
+        
+        <div class="action-btn">
+          <p><input type="submit" class="btn" value="<ly-as-4215117>Submit</ly-as-4215117>"></p>
+          <ly-as-4215089>or</ly-as-4215089> <a href="#" onclick="hideRecoverPasswordForm();return false;"><ly-as-4215090>Cancel</ly-as-4215090></a>
+        </div>
+        {% endform %}
+        
+        {% comment %}
+          If accounts are set as optional, the following will be shown as an option
+          during checkout, not on the default /login page.
+        {% endcomment %}
+        
+        {% if shop.checkout.guest_login %}
+        <hr>
+        <h2><ly-as-4215091>Continue as a guest</ly-as-4215091></h2>
+        {% form 'guest_login' %}
+        <input type="submit" class="btn" value="<ly-as-4215118>Let's go</ly-as-4215118>">
+        {% endform %}
+        {% endif %}
+      </div>
+
+      <p class="line"></p>
+      
+      <div id="create-account-buttons" class="create-account-buttons">
+        <h3><ly-as-4215092>Or Create an account</ly-as-4215092> {% comment %}ly_asset_replace_for_[ 'for-hot-deal.png' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'for-hot-deal.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}</h3>
+        <div class="row create-buttons">
+          <div class="col-sm-4 col-xs-12">
+            {% comment %}ly_asset_replace_for_[ 'self-tanners.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'self-tanners.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+            <h3><ly-as-4215093>Self tanners</ly-as-4215093></h3>
+            <ul>
+              <li><ly-as-4215094>VIP customer status</ly-as-4215094></li>
+              <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+              <li><ly-as-4215096>Promotions from your favourite brands</ly-as-4215096></li>
+            </ul>
+            <a href="#create-retail-account" onclick="showRetailSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+          </div>
+          <div class="col-sm-4 col-xs-12">
+            {% comment %}ly_asset_replace_for_[ 'trade-pros.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'trade-pros.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+            <h3><ly-as-4215098>Trade pros</ly-as-4215098></h3>
+            <ul>
+              <li><ly-as-4215099>View trade pricing</ly-as-4215099></li>
+              <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+              <li><ly-as-4215096>Promotions from your favourite brands</ly-as-4215096></li>
+            </ul>
+            <a href="#create-pro-account" onclick="showProSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+          </div>
+          <div class="col-sm-4 col-xs-12">
+            {% comment %}ly_asset_replace_for_[ 'distributor.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'distributor.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+            <h3><ly-as-4215100>Distributors</ly-as-4215100></h3>
+            <ul>
+              <li><ly-as-4215101>View distributor pricing</ly-as-4215101></li>
+              <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+              <li><ly-as-4215102>Save time & order online easily</ly-as-4215102></li>
+            </ul>
+            <a href="#contact_form" onclick="showWholeSaleSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+          </div>
+        </div>
+      </div>
+
+      <div id="create-retail-account" style="display: none;">
+        <div class="create-account-buttons">
+          <h3><ly-as-4215092>Or Create an account</ly-as-4215092> {% comment %}ly_asset_replace_for_[ 'for-hot-deal.png' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'for-hot-deal.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}</h3>
+          <div class="row create-buttons">
+            <div class="col-sm-4 col-xs-12 active">
+              {% comment %}ly_asset_replace_for_[ 'self-tanners.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'self-tanners.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+              <h3><ly-as-4215093>Self tanners</ly-as-4215093></h3>
+              <ul>
+                <li><ly-as-4215094>VIP customer status</ly-as-4215094></li>
+                <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+                <li><ly-as-4215096>Promotions from your favourite brands</ly-as-4215096></li>
+              </ul>
+              <a href="#create-retail-account" onclick="showRetailSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+            </div>
+            <div class="col-sm-4 col-xs-12 none-active">
+              {% comment %}ly_asset_replace_for_[ 'trade-pros.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'trade-pros.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+              <h3><ly-as-4215098>Trade pros</ly-as-4215098></h3>
+              <ul>
+                <li><ly-as-4215099>View trade pricing</ly-as-4215099></li>
+                <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+                <li><ly-as-4215096>Promotions from your favourite brands</ly-as-4215096></li>
+              </ul>
+              <a href="#create-pro-account" onclick="showProSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+            </div>
+            <div class="col-sm-4 col-xs-12 none-active">
+              {% comment %}ly_asset_replace_for_[ 'distributor.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'distributor.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+              <h3><ly-as-4215100>Distributors</ly-as-4215100></h3>
+              <ul>
+                <li><ly-as-4215101>View distributor pricing</ly-as-4215101></li>
+                <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+                <li><ly-as-4215102>Save time & order online easily</ly-as-4215102></li>
+              </ul>
+              <a href="#contact_form" onclick="showWholeSaleSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+            </div>
+          </div>
+        </div>
+        <h3><ly-as-4215103>Create your account & access all our amazing brands</ly-as-4215103></h3>
+        {% comment %}
+          This form must use 'create_customer'
+        {% endcomment %}
+        {% form 'create_customer' %}
+        {% include 'form-errors-custom' %}
+        <div id="first_name">
+          <label for="first_name"><ly-as-4215104>First Name</ly-as-4215104><em>*</em></label>
+          <input type="text" value="" name="customer[first_name]" id="first_name" {% if form.errors contains "first_name" %} class="error"{% endif %} data-validation="required">
+        </div>
+        
+        <div id="last_name">
+          <label for="last_name"><ly-as-4215105>Last Name</ly-as-4215105><em>*</em></label>
+          <input type="text" value="" name="customer[last_name]" id="last_name" {% if form.errors contains "last_name" %} class="error"{% endif %} data-validation="required">
+        </div>
+        
+        <div id="email">
+          <label for="email"><ly-as-4215106>Your Email Address</ly-as-4215106><em>*</em></label>
+          <input type="email" value="" name="customer[email]" id="email" {% if form.errors contains "email" %} class="error"{% endif %}  data-validation="email">
+        </div>
+        
+        <div id="create_password">
+          <label for="password"><ly-as-4215107>Your Password</ly-as-4215107><em>*</em></label>
+          <input type="password" value="" name="customer[password]" id="create_password" {% if form.errors contains "password" %} class="error"{% endif %} data-validation="length" data-validation-length="min6">
+        </div>
+        
+        <div class="action-btn">
+          <p><input type="submit" value="<ly-as-4215119>Create an Account</ly-as-4215119>" class="btn"></p>
+        </div>
+        {% endform %}
+      </div>
+
+      <div id="create-pro-account" style="display: none;">
+        <div class="create-account-buttons">
+          <h3><ly-as-4215092>Or Create an account</ly-as-4215092> {% comment %}ly_asset_replace_for_[ 'for-hot-deal.png' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'for-hot-deal.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}</h3>
+          <div class="row create-buttons">
+            <div class="col-sm-4 col-xs-12 none-active">
+              {% comment %}ly_asset_replace_for_[ 'self-tanners.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'self-tanners.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+              <h3><ly-as-4215093>Self tanners</ly-as-4215093></h3>
+              <ul>
+                <li><ly-as-4215094>VIP customer status</ly-as-4215094></li>
+                <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+                <li><ly-as-4215096>Promotions from your favourite brands</ly-as-4215096></li>
+              </ul>
+              <a href="#create-retail-account" onclick="showRetailSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+            </div>
+            <div class="col-sm-4 col-xs-12 active">
+              {% comment %}ly_asset_replace_for_[ 'trade-pros.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'trade-pros.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+              <h3><ly-as-4215098>Trade pros</ly-as-4215098></h3>
+              <ul>
+                <li><ly-as-4215099>View trade pricing</ly-as-4215099></li>
+                <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+                <li><ly-as-4215096>Promotions from your favourite brands</ly-as-4215096></li>
+              </ul>
+              <a href="#create-pro-account" onclick="showProSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+            </div>
+            <div class="col-sm-4 col-xs-12 none-active">
+              {% comment %}ly_asset_replace_for_[ 'distributor.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'distributor.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+              <h3><ly-as-4215100>Distributors</ly-as-4215100></h3>
+              <ul>
+                <li><ly-as-4215101>View distributor pricing</ly-as-4215101></li>
+                <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+                <li><ly-as-4215102>Save time & order online easily</ly-as-4215102></li>
+              </ul>
+              <a href="#contact_form" onclick="showWholeSaleSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+            </div>
+          </div>
+        </div>
+        <h3><ly-as-4215108>Create your pro account & access all our amazing brands</ly-as-4215108></h3>
+        {% comment %}
+          This form must use 'create_customer'
+        {% endcomment %}
+        {% form 'create_customer' %}
+        {% include 'form-errors-custom' %}
+        <input type="hidden" value="PRO" name="customer[tags]" id="tags">
+        <div id="first_name">
+          <label for="first_name"><ly-as-4215104>First Name</ly-as-4215104><em>*</em></label>
+          <input type="text" value="" name="customer[first_name]" id="first_name" {% if form.errors contains "first_name" %} class="error"{% endif %} data-validation="required">
+        </div>
+        
+        <div id="last_name">
+          <label for="last_name"><ly-as-4215105>Last Name</ly-as-4215105><em>*</em></label>
+          <input type="text" value="" name="customer[last_name]" id="last_name" {% if form.errors contains "last_name" %} class="error"{% endif %} data-validation="required">
+        </div>
+        
+        <div id="email">
+          <label for="email"><ly-as-4215106>Your Email Address</ly-as-4215106><em>*</em></label>
+          <input type="email" value="" name="customer[email]" id="email" {% if form.errors contains "email" %} class="error"{% endif %}  data-validation="email">
+        </div>
+
+        <div id="business">
+          <label for="business"><ly-as-4215109>Business Name</ly-as-4215109></label>
+          <input type="text" value="" name="customer[note][business_name]" id="business">
+        </div>
+
+        <div id="business_number">
+          <label for="business_number"><ly-as-4215110>Business Registration Number</ly-as-4215110></label>
+          <input type="text" value="" name="customer[note][business_registration_number]" id="business_number">
+        </div>
+
+        <div id="phone">
+          <label for="phone"><ly-as-4215111>Phone Number</ly-as-4215111></label>
+          <input type="text" value="" name="customer[note][phone_number]" id="phone">
+        </div>
+        
+        <div id="create_password">
+          <label for="password"><ly-as-4215107>Your Password</ly-as-4215107><em>*</em></label>
+          <input type="password" value="" name="customer[password]" id="create_password" {% if form.errors contains "password" %} class="error"{% endif %} data-validation="required">
+        </div>
+        
+        <div class="action-btn">
+          <p><input type="submit" value="<ly-as-4215119>Create an Account</ly-as-4215119>" class="btn"></p>
+        </div>
+        {% endform %}
+      </div>
+
+      <div id="contact_form" style="display: none;">
+        <div class="create-account-buttons">
+          <h3><ly-as-4215092>Or Create an account</ly-as-4215092> {% comment %}ly_asset_replace_for_[ 'for-hot-deal.png' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'for-hot-deal.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}</h3>
+          <div class="row create-buttons">
+            <div class="col-sm-4 col-xs-12 none-active">
+              {% comment %}ly_asset_replace_for_[ 'self-tanners.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'self-tanners.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+              <h3><ly-as-4215093>Self tanners</ly-as-4215093></h3>
+              <ul>
+                <li><ly-as-4215094>VIP customer status</ly-as-4215094></li>
+                <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+                <li><ly-as-4215096>Promotions from your favourite brands</ly-as-4215096></li>
+              </ul>
+              <a href="#create-retail-account" onclick="showRetailSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+            </div>
+            <div class="col-sm-4 col-xs-12 none-active">
+              {% comment %}ly_asset_replace_for_[ 'trade-pros.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'trade-pros.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+              <h3><ly-as-4215098>Trade pros</ly-as-4215098></h3>
+              <ul>
+                <li><ly-as-4215099>View trade pricing</ly-as-4215099></li>
+                <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+                <li><ly-as-4215096>Promotions from your favourite brands</ly-as-4215096></li>
+              </ul>
+              <a href="#create-pro-account" onclick="showProSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+            </div>
+            <div class="col-sm-4 col-xs-12 active">
+              {% comment %}ly_asset_replace_for_[ 'distributor.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'distributor.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+              <h3><ly-as-4215100>Distributors</ly-as-4215100></h3>
+              <ul>
+                <li><ly-as-4215101>View distributor pricing</ly-as-4215101></li>
+                <li><ly-as-4215095>Access to great deals</ly-as-4215095></li>
+                <li><ly-as-4215102>Save time & order online easily</ly-as-4215102></li>
+              </ul>
+              <a href="#contact_form" onclick="showWholeSaleSignupFormForm();" class="btn"><ly-as-4215097>Create account</ly-as-4215097></a>
+            </div>
+          </div>
+        </div>
+        <h3><ly-as-4215112>Request a distribution account for all our amazing brands</ly-as-4215112></h3>
+        {% form 'contact' %}
+            
+        {% comment %}
+          Successful message
+        {% endcomment %}
+        {% if form.posted_successfully? %}
+        <p class="note form-success">
+          <ly-as-4215113>Success! Your enquiry has been submitted. We'll get back to you as soon as possible.</ly-as-4215113>
+        </p>
+        {% endif %}
+        
+        {% include 'form-errors-custom' %}
+          
+        <div id="contactFormWrapper">
+          <div>
+            <label for="contactFormName"><ly-as-4215114>Your Name</ly-as-4215114><em>*</em></label>
+            <input type="text" id="contactFormName" name="contact[name]" autocapitalize="words" placeholder="{{ settings.contact_your_name }}" data-validation="required">
+          </div>
+          
+          <div>
+            <label for="contactFormEmail"><ly-as-4215115>Your Email</ly-as-4215115><em>*</em></label>
+            <input type="email" name="contact[email]" id="contactFormEmail" autocorrect="off" autocapitalize="off" placeholder="{{ settings.contact_your_email }}" data-validation="email">
+          </div>
+
+          <div>
+            <label for="contactFormBusinessName"><ly-as-4215109>Business Name</ly-as-4215109><em>*</em></label>
+            <input type="text" name="contact[business name]" id="contactFormBusinessName" autocorrect="off" autocapitalize="off" data-validation="required">
+          </div>
+
+          <div>
+            <label for="contactFormBusinessNumber"><ly-as-4215110>Business Registration Number</ly-as-4215110></label>
+            <input type="text" name="contact[business registration number]" id="contactFormBusinessNumber" autocorrect="off" autocapitalize="off">
+          </div>
+
+          <div>
+            <label for="contactFormPhone"><ly-as-4215111>Phone Number</ly-as-4215111><em>*</em></label>
+            <input type="tel" name="contact[phone]" id="contactFormPhone" pattern="[0-9]*" placeholder="{{ settings.contact_phone_number }}" data-validation="required">
+          </div>
+          
+          <input type="hidden" name="contact[body]" id="contactFormMessage" value="Request a distribute account">
+          
+          <div class="action-btn">
+            <p><input type="submit" value="<ly-as-4215120>Enquire</ly-as-4215120>" class="btn"></p>
+          </div>
+        </div>
+        {% endform %}
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  /*
+    Show/hide the recover password form when requested.
+    I'd suggest using some CSS3 transitions to make this change look cool,
+    but this gets the job done for now.
+  */
+  function showRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'block';
+    document.getElementById('customer_login').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'none';
+    document.getElementById('customer_login').style.display = 'block';
+  }
+
+  function showRetailSignupFormForm() {
+    document.getElementById('create-retail-account').style.display = 'block';
+    document.getElementById('create-account-buttons').style.display = 'none';
+    document.getElementById('create-pro-account').style.display = 'none';
+    document.getElementById('contact_form').style.display = 'none';
+  }
+
+  function showProSignupFormForm() {
+    document.getElementById('create-pro-account').style.display = 'block';
+    document.getElementById('create-retail-account').style.display = 'none';
+    document.getElementById('create-account-buttons').style.display = 'none';
+    document.getElementById('contact_form').style.display = 'none';
+  }
+
+  function showWholeSaleSignupFormForm() {
+    document.getElementById('contact_form').style.display = 'block';
+    document.getElementById('create-pro-account').style.display = 'none';
+    document.getElementById('create-retail-account').style.display = 'none';
+    document.getElementById('create-account-buttons').style.display = 'none';
+  }
+
+  // Allow deep linking to the recover password form
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+  if (window.location.hash == '#create-retail-account') { showRetailSignupFormForm() }
+  if (window.location.hash == '#create-pro-account') { showProSignupFormForm() }
+  if (window.location.hash == '#contact_form') { showWholeSaleSignupFormForm() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success %}
+    document.getElementById('resetSuccess').style.display = 'block';
+  {% endif %}
+</script>
+
+<script>
+  $(document).ready(function() {
+    $.validate();
+  });
+</script>

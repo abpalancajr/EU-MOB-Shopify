@@ -1,0 +1,14 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<div class="widget widget-recent-articles">
+  <div class="widget-title">
+ 	 <h3><span><ly-as-4214907>Recent Articles</ly-as-4214907></span></h3>
+  </div>
+  <div class="widget-content">
+    	<ul>
+    {% for article in blog.articles limit:10 %}
+      <li class="article">
+     	 <p><a href="{{ article.url }}">{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a> <em> {{ article.published_at | date: "%B %d, %Y" }}</em></p>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>

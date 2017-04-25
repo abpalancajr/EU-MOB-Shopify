@@ -1,0 +1,26 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% if settings.display_banner %}
+<section class="banner wow fadeInUp">
+  {% comment %}ly_asset_replace_for_[ 'banner.jpg' | asset_url | img_tag ]_begin{% endcomment %}{% assign ly_asset = 'banner.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  | img_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+  <div class="container">
+    <div class="inner">
+      <div class="content">
+        {% if settings.banner_text_title != blank %}
+        <h2>{{ settings.banner_text_title }}</h2>
+        <p class="line">&nbsp;</p>
+        {% endif %}
+        <p>
+          {% if settings.banner_text_description != blank %}
+          {{ settings.banner_text_description }}
+          {% endif %}
+        </p>
+        {% if settings.banner_button_text != blank %}
+        <a href="{{ settings.banner_button_link }}" title="{{ settings.banner_button_text }}" class="btn">
+          {{ settings.banner_button_text }}
+          <span class="arrow"><ly-as-4214716>arrow</ly-as-4214716></span>
+        </a>		
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
